@@ -1,0 +1,44 @@
+* Yêu cầu đối với hệ thống:
+- màn hình chia làm 3 phần: hiển thị ảnh, ô trống ghép chữ, hiển thị các chứ cái cần ghép
+- người dùng click vào các chữ cái cần ghép thì chữ cái đó sẽ hiển thị lên ô trống
+- người dùng click vào chữ cái đã được ghép trên ô trống sẽ xóa chữ cái đó
+- sau khi người dùng điền đủ chữ cái vào ô trống sẽ xác định xem chữ cái đó có trùng với
+đáp án không, nếu không thì không được điểm và chuyển qua chữ cái tiếp theo, nếu đúng thì
+được 1 điểm và chuyển sang chữ cái tiếp theo.
+- sau khi hoàn thành số chữ cái nhất định, tổng kết số điểm của người chơi.
+
+* Hướng giải quyết
+tạo 1 mảng gồm nhiều object có các key: ảnh, chữ, id
+- lấy key chữ, cắt các chữ cái thành từng chữ lưu vào mảng, đảo các chữ cái trong mảng
+- hiện mảng các chữ cái đã được đảo lên màn hình
+sử dụng useState để cập nhật một mảng để lưu các chữ cái người chơi chọn điền vào ô trống:
+- nếu người chơi click vào chữ cái để điền vào ô trống, setState cho chữ cái đó vào mảng
+- nếu người chơi click vào chữ cái được điền thì lấy vị trí chữ cái đó và xóa khỏi mảng 
+state.
+
+chọn ra số chữ nhất định trong mảng, lấy các chữ đó để làm câu đố cho người chơi
+- sử dụng useState dạng mảng để lấy từng chữ cái thực hiện câu đố
+- khi chơi trả lời xong 1 câu đố sẽ setState đó lại bằng rỗng rồi setState bằng chữ tiếp
+theo để làm câu hỏi
+
+các ô trống render ra sẽ dựa vào mảng chứa các chữ cái có bao nhiêu phần tử:
+- khi người dùng click vào chữ cái đó để điền vòa ô trống thì chữ cái đó sẽ biến mất ở 
+nơi hiển thị các chữ cái
+- sau khi người chơi điền xong hết các chữ cái sẽ hiện ra nút kiểm tra để người chơi có
+thể xem kết quả.
+- sau khi người chơi click nút kiểm tra thì hiển thị popup thông báo kết quả và chuyển 
+câu hỏi tiếp theo
+lưu số điểm của người chơi vào một biến:
+- khi người chơi trả lời đúng một chữ cái sẽ tăng biến thêm 1
+- khi người chơi trả lời sai sẽ giữ nguyên giá trị hiện tại của biến đó
+
+
+
+---> Thêm option chơi lại từ vừa chọn nếu người chơi trả lời sai, khi người chơi chọn 
+chơi lại thì chỉ cho phép chơi lại 3 lần trong một lần chơi ---> tạm xong, cần test lại thêm các trường hợp
+---> Suy nghĩ thêm chức năng gợi ý cho trò chơi, khi người chơi chọn gợi ý sẽ hiện một
+chữ cái đúng vị trí lên cho người chơi ---> false
+---> Khi người chơi chọn một chữ cái thì sẽ disable cho chữ cái đó. ---> Done
+---> Thêm lựa chọn xóa toàn bộ những chữ cái mà người chơi vừa chọn. ---> Done.
+---> Thêm thời gian hoàn thành sau khi người chơi trả lời hết 5 câu hỏi --> Cần thêm một Component trước khi người chơi bắt đầu chơi
+để có mốc tính thơi gian. ---> có thể không cần thiết.
