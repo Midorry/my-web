@@ -5,6 +5,10 @@ function Popup(props) {
     const [disabled, setDisabled] = useState(false);
     let num = useRef(3);
     let info = useRef("");
+    const result = props.result;
+    const playerResult = props.pickLetters.join("");
+
+    //Hàm xử lý sau khi hiện Pop up kết quả
     const handleOnClick = () => {
         props.setTrigger(false);
         if (props.giveUp) {
@@ -13,24 +17,13 @@ function Popup(props) {
             props.setGiveUp(false);
         }
         if (props.word.length === props.letters.length) {
-            const p = props.p;
-            const t = props.pickLetters.join("");
-            if (p !== t) {
-                // count.current -= 1;
-                // console.log(id.score);
-                // let value = id.score - 1;
-                // if (value < 0) {
-                //     value = 0;
-                // }
-                // props.setTrigger(true);
+            if (result !== playerResult) {
                 props.setId({ id: props.id.id + 1, score: props.id.score });
                 props.setWord([]);
             }
-            if (p === t) {
-                console.log("Congratulation", props.id.id, props.id.score);
+            if (result === playerResult) {
                 if (props.length > props.id.id) {
                     props.count.current += 1;
-                    // props.setTrigger(true);
                     props.setId({
                         id: props.id.id + 1,
                         score: props.id.score + 1,
@@ -41,23 +34,21 @@ function Popup(props) {
         }
     };
 
+    // Hàm xử lý khi người chơi muốn chơi lại
     const handlePlayAgain = () => {
         num.current -= 1;
         if (num.current < 0) {
             num.current = 0;
         }
-        console.log("Play Again");
         if (num.current === 0) {
             info.current = "Bạn đã hết lượt chơi lại";
             setDisabled(true);
         }
         if (props.length === props.letters.length) {
-            const p = props.p;
-            const t = props.pickLetters.join("");
-            if (p !== t) {
+            if (result !== playerResult) {
                 props.setId({ id: props.id.id, score: props.count.current });
             }
-            if (p === t) {
+            if (result === playerResult) {
                 props.setId({ id: props.id.id, score: props.count.current });
             }
         } else {
@@ -76,16 +67,13 @@ function Popup(props) {
                     <div>Số lượt chơi lại: {num.current}</div>
                     <div>{info.current}</div>
                     <br />
-                    {disabled ? (
+                    {disabled || props.giveUp || result === playerResult ? (
                         <p></p>
                     ) : (
                         <PlayAgain onClick={handlePlayAgain}>
-                            {disabled ? "" : "PlayAgain"}
+                            {disabled ? "" : "Play Again"}
                         </PlayAgain>
                     )}
-                    {/* <PlayAgain onClick={handlePlayAgain}>
-                        {disabled ? "" : "PlayAgain"}
-                    </PlayAgain> */}
                 </Wrap>
             </Container>
         </Main>

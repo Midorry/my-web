@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
+// import ReactAudioPlayer from "react-audio-player";
 import View from "./View";
-import { Text, Wrap } from "./styleApp";
+import { Audio, Wrap } from "./styleApp";
 import Home from "./Home";
 
 function App() {
@@ -66,21 +67,15 @@ function App() {
     const shuffled = list.sort(() => 0.5 - Math.random());
 
     // Get sub-array of first n elements after shuffled
-    let one = [];
+    let arrLetters = [];
     let check = [];
     let selected = shuffled.slice(0, 5);
-    // const sample = selected[1].word.toUpperCase().split("")
-    //   .map(x => ({ x, r: Math.random() }))
-    //   .sort((a, b) => a.r - b.r)
-    //   .map(a => a.x)
-    //   .slice(0, n);
-    //   console.log(sample)
 
     for (let k = 0; k < selected.length; k++) {
         check[k] = selected[k].word;
     }
     for (let j = 0; j < selected.length; j++) {
-        one[j] = selected[j].word
+        arrLetters[j] = selected[j].word
             .toUpperCase()
             .split("")
             .map((x) => ({ x, r: Math.random() }))
@@ -90,8 +85,10 @@ function App() {
     }
     return (
         <div className="App">
+            <Audio autoPlay controls loop preload="true">
+                <source src="./song.mp3" type="audio/mpeg"></source>
+            </Audio>
             <Wrap>Game đố chữ</Wrap>
-            <Text>Luật chơi</Text>
 
             <Routes>
                 <Route
@@ -105,7 +102,11 @@ function App() {
                 <Route
                     path="/play"
                     element={
-                        <View list={one} check={check} selected={selected} />
+                        <View
+                            list={arrLetters}
+                            check={check}
+                            selected={selected}
+                        />
                     }
                 />
             </Routes>

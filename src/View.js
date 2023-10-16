@@ -18,6 +18,9 @@ function View(props) {
     let arrCheck = [];
     let result = useRef("");
     const letters = props.list[id.id];
+
+    // kiểm tra xem người chơi trả lời đủ 5 câu hỏi chưa
+    // nếu đã trả lời đủ 5 thì chuyển qua page thông báo điểm
     if (id.id === props.list.length) {
         // console.log(id.id, id.score + 1);
         // console.log(count.current);
@@ -31,6 +34,8 @@ function View(props) {
         );
     }
 
+    // handle disabled thẻ buttion khi người dùng click chọn
+    // chữ cái
     const toggleActive = (index) => {
         del.current = [...del.current, index];
         // console.log(numActive.current);
@@ -39,30 +44,12 @@ function View(props) {
         setActiveIndex(numActive.current);
     };
 
-    // console.log("score", id.score);
-    // console.log("id", id.id);
-    // console.log(id.id, letters);
-    // console.log(props.list);
-
+    // hàm lấy chữ người dùng vừa chọn để hiện lên ô trống
     const checkResult = (v) => {
         if (word[v] !== undefined) {
             if (v === word[v].key) {
                 if (pickLetters[v] === undefined) {
                     pickLetters.push(word[v].letter);
-                }
-                // console.log(k);
-                if (word.length === letters.length) {
-                    const p = props.check[id.id].toUpperCase();
-                    const t = pickLetters.join("");
-                    if (p !== t) {
-                        // result.current = `Wrong`;
-                        // setPopup(true);
-                    }
-                    if (p === t) {
-                        if (props.list.length > id.id) {
-                            // result.current = `Correct ${id.score + 1}`;
-                        }
-                    }
                 }
                 return pickLetters[v];
             }
@@ -71,10 +58,12 @@ function View(props) {
         }
     };
 
+    // hàm tính điểm khi người dùng chọn give up
     const giveUpResult = (index) => {
         return correct.current[index];
     };
 
+    // hàm xử lý việc đưa ra kết quả chính xác khi người dùng chọn give up
     const handleGiveUp = () => {
         isGiveUp.current = true;
         if (count.current < 0) {
@@ -87,6 +76,7 @@ function View(props) {
         setGiveUp(true);
     };
 
+    // Hàm xử lý kết quả sau khi người dùng bấm Next
     const handleNext = () => {
         numActive.current = [];
         setActiveIndex([]);
@@ -117,7 +107,6 @@ function View(props) {
             }
             if (p === t) {
                 if (props.list.length > id.id) {
-                    console.log("Congratulation", id.id, id.score);
                     result.current = "Kết quả đúng";
                     // count.current += 1;
 
@@ -129,6 +118,7 @@ function View(props) {
         }
     };
 
+    // hàm xử lý việc người dùng chọn chữ cái
     const handleOnClick = (e) => {
         toggleActive(Number(e.target.id));
         const text = e.target.value;
@@ -138,6 +128,7 @@ function View(props) {
         }
     };
 
+    //Hàm xử lý việc người dùng chọn xóa chữ cái vừa chọn
     const handleDel = () => {
         let length = del.current.length - 1;
         // console.log(del.current);
@@ -153,6 +144,7 @@ function View(props) {
         // }
     };
 
+    // Hàm xử lý việc người dùng muốn xóa tất chữ cái đã chọn
     const handleDelAll = () => {
         numActive.current = [];
         setActiveIndex([]);
@@ -175,7 +167,7 @@ function View(props) {
                 letters={letters}
                 length={props.list.length}
                 pickLetters={pickLetters}
-                p={props.check[id.id].toUpperCase()}
+                result={props.check[id.id].toUpperCase()}
                 count={count}
                 giveUp={giveUp}
             >
@@ -206,14 +198,20 @@ function View(props) {
                 <img
                     src={props.selected[id.id].image}
                     alt="img"
-                    style={{ height: "200px", objectFit: "cover" }}
+                    style={{ height: "290px", objectFit: "cover" }}
                 ></img>
             </Wrap>
             <Wrap>
-                <Button onClick={handleDel}>Xóa chữ cái</Button>
-                <Button onClick={handleDelAll}>Xóa hết</Button>
-                <Button onClick={handleGiveUp}>Bỏ cuộc</Button>
-                <Button onClick={handleNext}>Check</Button>
+                {giveUp ? (
+                    <p></p>
+                ) : (
+                    <Fragment>
+                        <Button onClick={handleDel}>Delete Letter</Button>
+                        <Button onClick={handleDelAll}>Delete All</Button>
+                        <Button onClick={handleGiveUp}>Give Up</Button>
+                    </Fragment>
+                )}
+                <Button onClick={handleNext}>Next</Button>
             </Wrap>
         </Fragment>
     );

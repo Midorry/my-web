@@ -36,8 +36,8 @@ export const Button = styled.button`
     color: red;
     font-weight: 800;
     position: absolute;
-    right: 4px;
-    top: 4px;
+    right: 10px;
+    top: 10px;
     cursor: pointer;
 `;
 
@@ -56,6 +56,6 @@ export const Wrap = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: bold;
 `;

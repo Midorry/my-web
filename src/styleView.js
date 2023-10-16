@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Letter = styled.button`
+    font-weight: 600;
     height: 40px;
     width: 40px;
     border: 1px solid #ccc;
@@ -11,6 +12,9 @@ export const Letter = styled.button`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    &:hover {
+        background-color: #8ae3e3;
+    }
 `;
 
 export const Wrap = styled.div`
@@ -28,13 +32,17 @@ export const Container = styled.div`
 export const Button = styled.button`
     border: 1px solid #ccc;
     border-radius: 10px;
-    color: #000;
-    width: 100px;
-    font-size: 14px;
+    width: 120px;
+    font-weight: 600;
+    line-height: normal;
+    font-size: 15px;
     height: 40px;
     margin-right: 40px;
     background-color: aqua;
     cursor: pointer;
+    &:hover {
+        background-color: #8ae3e3;
+    }
 `;
 export const Text = styled.p`
     display: flex;

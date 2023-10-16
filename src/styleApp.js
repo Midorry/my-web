@@ -7,6 +7,7 @@ export const Wrap = styled.div`
     margin: 40px 0;
     font-size: 60px;
     color: aqua;
+    font-weight: bold;
 `;
 
 export const Test = styled.div`
@@ -19,4 +20,9 @@ export const Text = styled.p`
     justify-content: center;
     font-size: 22px;
     margin: 40px 0;
+`;
+export const Audio = styled.audio`
+    position: fixed;
+    right: 22px;
+    top: 54px;
 `;
